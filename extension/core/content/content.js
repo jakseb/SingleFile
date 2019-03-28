@@ -48,10 +48,15 @@ this.singlefile.top = this.singlefile.top || (() => {
 				processing = true;
 				try {
 					const page = await processPage(options);
+					throw new Error('this should give a red ERR badge');
 					await downloadPage(page, options);
 				} catch (error) {
 					console.error(error); // eslint-disable-line no-console
-					browser.runtime.sendMessage({ method: "ui.processError", error, options: {} });
+					browser.runtime.sendMessage({ method: "ui.processError", error, options: {} })
+					.catch(errerr => {
+						console.error('sendMessage(error) failed: ' + String(errerr));
+						console.error(errerr);
+					});
 				}
 			} else {
 				browser.runtime.sendMessage({ method: "ui.processCancelled", options: {} });
