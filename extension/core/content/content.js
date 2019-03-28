@@ -51,7 +51,7 @@ this.singlefile.top = this.singlefile.top || (() => {
 					await downloadPage(page, options);
 				} catch (error) {
 					console.error(error); // eslint-disable-line no-console
-					browser.runtime.sendMessage({ method: "ui.processError", error, options: {} });
+					browser.runtime.sendMessage({ method: "ui.processError", error: String(error), options: {} });
 				}
 			} else {
 				browser.runtime.sendMessage({ method: "ui.processCancelled", options: {} });
